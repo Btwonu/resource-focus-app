@@ -1,17 +1,18 @@
 import React from 'react';
-import Heading from './Heading/index.jsx';
+import Hero from './Hero';
+import Section from './Section';
+import Shell from './Shell';
+import Divider from './Divider';
 
 const App = () => {
   return (
-    <>
-      <div className="test">
-        <h1 className="heading">Hello from App</h1>
-      </div>
-
-      <div>
-        <Heading />
-      </div>
-    </>
+    <div className="wrapper">
+      <Shell>
+        <Hero />
+        <Divider />
+        <Section />
+      </Shell>
+    </div>
   );
 };
 

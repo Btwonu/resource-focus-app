@@ -4,10 +4,21 @@
 @import 'fonts';
 
 body {
-  color: $c-green;
   font-family: $ff-sans;
 }
 
-body:fullscreen {
-  background-color: #fdfdfd;
+img {
+  max-width: 100%;
+}
+
+.wrapper {
+  height: 100vh;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+h2 {
+  font-size: 22px;
 }
