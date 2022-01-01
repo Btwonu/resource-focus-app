@@ -22,4 +22,22 @@ const CHILD_DATA = [
   { title: 'Redux', url: 'https://' },
 ];
 
-export { ITEMS_DATA, BOOKS_DATA, VIDEO_DATA, CHILD_DATA };
+const TASKS_DATA = [
+  {
+    title: 'Learn JSX',
+    body: 'Some longer more descriptive text, explaining what exactly to do',
+    completed: false,
+  },
+  {
+    title: 'Build components',
+    body: 'Some longer more descriptive text, explaining what exactly to do',
+    completed: false,
+  },
+  {
+    title: 'Set up Webpack',
+    body: 'Some longer more descriptive text, explaining what exactly to do',
+    completed: false,
+  },
+];
+
+export { ITEMS_DATA, BOOKS_DATA, VIDEO_DATA, CHILD_DATA, TASKS_DATA };
