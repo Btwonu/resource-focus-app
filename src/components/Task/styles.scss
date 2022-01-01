@@ -1,0 +1,21 @@
+.task {
+  .task__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .task__body {
+    display: none;
+  }
+
+  .task__body p {
+    margin: 0;
+  }
+
+  .task__body.active {
+    display: block;
+  }
+}
