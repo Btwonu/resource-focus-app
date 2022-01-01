@@ -1,0 +1,15 @@
+.form {
+  .form__head {
+    margin: 10px 0;
+  }
+
+  .form__body input,
+  .form__body textarea {
+    width: 100%;
+  }
+
+  .form__body input + input,
+  .form__body input + textarea {
+    margin-top: 10px;
+  }
+}

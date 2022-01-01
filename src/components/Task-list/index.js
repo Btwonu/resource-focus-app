@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from '../Form';
 import Task from '../Task';
+import Modal from '../Modal';
 import './styles.scss';
 
 import { TASKS_DATA } from '../../data-mock';
@@ -9,11 +10,7 @@ const TaskList = () => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskBody, setTaskBody] = useState('');
   const [tasks, setTasks] = useState(TASKS_DATA);
-
-  useEffect(() => {
-    // console.log({ taskTitle });
-    // console.log({ tasks });
-  }, [taskTitle, taskBody, tasks]);
+  const [modalOpened, setModalOpened] = useState(false);
 
   const taskList = tasks.map((task, i) => {
     return (
@@ -23,6 +20,7 @@ const TaskList = () => {
     );
   });
 
+  // Form methods
   const onTitleInputChange = (e) => {
     setTaskTitle(e.target.value);
   };
@@ -40,17 +38,40 @@ const TaskList = () => {
     ]);
   };
 
+  // Modal methods
+  const openModal = () => {
+    setModalOpened(true);
+  };
+
+  const closeModal = () => {
+    setModalOpened(false);
+  };
+
   return (
     <div className="task-list">
       <ul>{taskList}</ul>
 
-      <Form onFormSubmit={onFormSubmit}>
-        <input type="text" value={taskTitle} onChange={onTitleInputChange} />
+      <button onClick={openModal}>Open task form</button>
 
-        <input type="textarea" value={taskBody} onChange={onBodyInputChange} />
+      <Modal opened={modalOpened} openModal={openModal} closeModal={closeModal}>
+        <Form title="Add Task" onFormSubmit={onFormSubmit}>
+          <input
+            type="text"
+            value={taskTitle}
+            onChange={onTitleInputChange}
+            placeholder="Task"
+          />
 
-        <button type="submit">Submit</button>
-      </Form>
+          <textarea
+            rows="5"
+            value={taskBody}
+            onChange={onBodyInputChange}
+            placeholder="Task description"
+          />
+
+          <button type="submit">Add</button>
+        </Form>
+      </Modal>
     </div>
   );
 };
