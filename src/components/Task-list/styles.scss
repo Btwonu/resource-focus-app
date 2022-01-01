@@ -1,0 +1,11 @@
+.task-list {
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  li p {
+    margin: 0;
+  }
+}

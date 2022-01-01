@@ -1,11 +1,12 @@
 import React from 'react';
 import ListLinks from '../List-links';
+import './styles.scss';
 
-const Section = ({ title, items, children }) => {
+const SubSection = ({ title, items, children }) => {
   return (
-    <div className={`section section--${title.toLowerCase()}`}>
+    <div>
       <div className="section__head">
-        <h2>{title}</h2>
+        <h3>{title}</h3>
       </div>
 
       <div className="section__body">
@@ -17,4 +18,4 @@ const Section = ({ title, items, children }) => {
   );
 };
 
-export default Section;
+export default SubSection;
