@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.scss';
+import FormInput from '../Form-input';
 
-const VideoForm = () => {
+const VideoForm = ({ children }) => {
 	const [formState, setFormState] = useState({
 		title: '',
 		url: '',
@@ -31,7 +32,7 @@ const VideoForm = () => {
 
 	return (
 		<div className="form-video">
-			<h2 className="form__head">{title}</h2>
+			<h2 className="form__head">Video Form</h2>
 
 			<form onSubmit={onFormSubmit}>
 				<div className="form__body">

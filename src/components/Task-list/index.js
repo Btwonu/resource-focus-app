@@ -18,25 +18,12 @@ const TaskList = () => {
 		);
 	});
 
-	// Modal methods
-	const openModal = () => {
-		setModalOpened(true);
-	};
-
-	const closeModal = () => {
-		setModalOpened(false);
-	};
-
 	return (
 		<div className="task-list">
 			<ul>{taskList}</ul>
 
-			<button onClick={openModal}>Open task form</button>
-
-			<Modal opened={modalOpened} openModal={openModal} closeModal={closeModal}>
-				<TaskForm title="Add Task">
-					<textarea rows="5" placeholder="Task description" />
-				</TaskForm>
+			<Modal>
+				<TaskForm />
 			</Modal>
 		</div>
 	);

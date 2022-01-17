@@ -2,24 +2,33 @@ import React, { useState, useEffect } from 'react';
 import Shell from '../Shell';
 import './styles.scss';
 
-const Modal = ({ children, opened, openModal, closeModal }) => {
-	const [visible, setVisible] = useState(opened);
+const Modal = ({ children }) => {
+	const [visible, setVisible] = useState(false);
 
-	useEffect(() => {
-		setVisible(opened);
-	}, [opened]);
+	// Modal methods
+	const openModal = () => {
+		setVisible(true);
+	};
 
-	return (
-		<div className={`modal ${visible ? '' : 'hidden'}`}>
-			<Shell>
-				<h2>Modal</h2>
+	const closeModal = () => {
+		setVisible(false);
+	};
 
-				<div className="modal__body">{children}</div>
+	if (visible) {
+		return (
+			<div className="modal visible">
+				<Shell>
+					<h2>Modal</h2>
 
-				<button onClick={closeModal}>Close modal</button>
-			</Shell>
-		</div>
-	);
+					<div className="modal__body">{children}</div>
+
+					<button onClick={closeModal}>Close modal</button>
+				</Shell>
+			</div>
+		);
+	} else {
+		return <button onClick={openModal}>Open Modal</button>;
+	}
 };
 
 export default Modal;

@@ -3,7 +3,7 @@ import './styles.scss';
 import FormInput from '../Form-input';
 import Textarea from '../Textarea';
 
-const TaskForm = ({ title }) => {
+const TaskForm = ({ children }) => {
 	const [formState, setFormState] = useState({
 		title: '',
 		body: '',
@@ -33,7 +33,7 @@ const TaskForm = ({ title }) => {
 
 	return (
 		<div className="form-task">
-			<h2 className="form__head">{title}</h2>
+			<h2 className="form__head">Task Form</h2>
 
 			<form onSubmit={onFormSubmit}>
 				<div className="form__body">
