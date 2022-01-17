@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Form from '../Form';
+import TaskForm from '../Task-form';
 import Task from '../Task';
 import Modal from '../Modal';
 import './styles.scss';
@@ -34,9 +34,9 @@ const TaskList = () => {
 			<button onClick={openModal}>Open task form</button>
 
 			<Modal opened={modalOpened} openModal={openModal} closeModal={closeModal}>
-				<Form title="Add Task">
+				<TaskForm title="Add Task">
 					<textarea rows="5" placeholder="Task description" />
-				</Form>
+				</TaskForm>
 			</Modal>
 		</div>
 	);

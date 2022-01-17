@@ -4,7 +4,7 @@ import './styles.scss';
 const Textarea = ({ id, labelName, ...props }) => {
 	return (
 		<div className="form__textarea">
-			{labelName ? <label for={id}>{labelName}</label> : null}
+			{labelName ? <label htmlFor={id}>{labelName}</label> : null}
 
 			<textarea id={id} {...props}></textarea>
 		</div>

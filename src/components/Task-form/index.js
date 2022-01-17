@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './styles.scss';
-import FormInput from '../FormInput';
+import FormInput from '../Form-input';
 import Textarea from '../Textarea';
 
-const Form = ({ title }) => {
+const TaskForm = ({ title }) => {
 	const [formState, setFormState] = useState({
 		title: '',
 		body: '',
@@ -24,14 +24,15 @@ const Form = ({ title }) => {
 		console.log('submitting...');
 
 		console.log(formState);
-		// setTasks([
-		//   ...tasks,
-		//   { title: taskTitle, body: taskBody, completed: false },
-		// ]);
+
+		setFormState({
+			title: '',
+			body: '',
+		});
 	};
 
 	return (
-		<div className="form">
+		<div className="form-task">
 			<h2 className="form__head">{title}</h2>
 
 			<form onSubmit={onFormSubmit}>
@@ -62,4 +63,4 @@ const Form = ({ title }) => {
 	);
 };
 
-export default Form;
+export default TaskForm;
