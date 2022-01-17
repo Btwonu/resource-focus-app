@@ -1,15 +1,19 @@
 .form {
-  .form__head {
-    margin: 10px 0;
-  }
+	.form__head {
+		margin: 10px 0;
+	}
 
-  .form__body input,
-  .form__body textarea {
-    width: 100%;
-  }
+	.form__body input,
+	.form__body textarea {
+		width: 100%;
+	}
 
-  .form__body input + input,
-  .form__body input + textarea {
-    margin-top: 10px;
-  }
+	.form__body input + input,
+	.form__body textarea + textarea,
+	.form__body input + textarea,
+	.form__body textarea + input,
+	.form__field + .form__textarea,
+	.form__textarea + .form__field {
+		margin-top: 10px;
+	}
 }
