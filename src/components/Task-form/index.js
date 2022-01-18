@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './styles.scss';
 import FormInput from '../Form-input';
 import Textarea from '../Textarea';
+import { addTask } from '../../services/task-service';
 
 const TaskForm = ({ children }) => {
 	const [formState, setFormState] = useState({
 		title: '',
 		body: '',
+		completed: false,
 	});
 
 	// Form methods
@@ -22,8 +24,9 @@ const TaskForm = ({ children }) => {
 		e.preventDefault();
 
 		console.log('submitting...');
-
 		console.log(formState);
+
+		addTask(formState);
 
 		setFormState({
 			title: '',
