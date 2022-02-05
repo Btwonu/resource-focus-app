@@ -9,6 +9,7 @@ import SubSection from './Sub-section';
 import TaskList from './Task-list';
 import VideoForm from './Video-form/VideoForm';
 import Modal from './Modal';
+import Timer from './Timer';
 
 const App = () => {
 	const returnLinkItem = (item, i) => {
@@ -45,6 +46,8 @@ const App = () => {
 				</Section>
 
 				<Section title="Child Pages" items={childArray}></Section>
+
+				<Timer />
 			</Shell>
 		</div>
 	);
