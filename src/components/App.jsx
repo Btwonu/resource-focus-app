@@ -10,8 +10,23 @@ import TaskList from './Task-list';
 import VideoForm from './Video-form/VideoForm';
 import Modal from './Modal';
 import Timer from './Timer';
+import TopicList from './Topic-list';
+import Book from './Book';
+import BookList from './Book-list';
+
+import {
+	getBook,
+	getBooks,
+	addBook,
+	patchBook,
+	removeBook,
+	replaceBook,
+} from '../services/book-service.js';
+
+import '../services/seedBooks.js';
 
 const App = () => {
+	getBooks();
 	const returnLinkItem = (item, i) => {
 		return (
 			<li key={i}>
@@ -28,6 +43,8 @@ const App = () => {
 	return (
 		<div className="wrapper">
 			<Shell>
+				<BookList />
+				<TopicList></TopicList>
 				<Hero />
 				<Button />
 				<Divider />

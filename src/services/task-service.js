@@ -1,6 +1,12 @@
-import { db, collection, doc, addDoc, setDoc } from '../config/firebase.config';
+import {
+	firestore,
+	collection,
+	doc,
+	addDoc,
+	setDoc,
+} from '../config/firebase.config';
 
-const taskCollection = collection(db, 'tasks');
+const taskCollection = collection(firestore, 'tasks');
 
 const addTask = (taskData) => {
 	addDoc(taskCollection, taskData)
