@@ -5,39 +5,39 @@ import reactLogo from '../../images/logo-react.png';
 import './styles.scss';
 
 const DATA = [
-  { id: 0, title: 'Documentation', url: 'https://' },
-  { id: 1, title: 'Something', url: 'https://' },
+	{ id: 0, title: 'Documentation', url: 'https://' },
+	{ id: 1, title: 'Something', url: 'https://' },
 ];
 
-const Hero = () => {
-  const links = DATA.map((link) => (
-    <li key={link.id}>
-      <a href={link.url}>{link.title}</a>
-    </li>
-  ));
+const Hero = ({ title }) => {
+	const links = DATA.map((link) => (
+		<li key={link.id}>
+			<a href={link.url}>{link.title}</a>
+		</li>
+	));
 
-  const addLink = (link) => {
-    const linkObj = {
-      title: link.title,
-      url: link.url,
-    };
+	const addLink = (link) => {
+		const linkObj = {
+			title: link.title,
+			url: link.url,
+		};
 
-    DATA.push(linkObj);
-  };
+		DATA.push(linkObj);
+	};
 
-  return (
-    <div className="hero">
-      <h1 className="hero__head">React</h1>
+	return (
+		<div className="hero">
+			<h1 className="hero__head">{title}</h1>
 
-      <Logo src={reactLogo} />
+			<Logo src={reactLogo} />
 
-      <div className="hero__body">
-        <p>A JavaScript library for building user interfaces</p>
+			<div className="hero__body">
+				<p>A JavaScript library for building user interfaces</p>
 
-        <ListLinks>{links}</ListLinks>
-      </div>
-    </div>
-  );
+				<ListLinks>{links}</ListLinks>
+			</div>
+		</div>
+	);
 };
 
 export default Hero;

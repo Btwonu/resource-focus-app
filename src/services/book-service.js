@@ -14,21 +14,12 @@ const bookCollection = collection(firestore, 'books');
 
 const getBook = (bookId) => {
 	const docRef = doc(firestore, `books/${bookId}`);
-
-	getDoc(docRef)
-		.then((docSnapshot) => {
-			if (docSnapshot.exists()) {
-				const docData = docSnapshot.data();
-
-				console.log('Exists -> ', docData);
-			} else {
-				console.log('Does not exist.');
-			}
-		})
-		.catch((err) => console.log('Error:', err));
+	return getDoc(docRef);
 };
 
-const getBooks = () => {
+const getBooks = (bookIds) => {};
+
+const getAllBooks = () => {
 	getDocs(bookCollection)
 		.then((querySnapshot) => {
 			querySnapshot.forEach((doc) => {
@@ -82,7 +73,15 @@ const removeBook = (bookId) => {
 		.catch((err) => console.log('Error:', err));
 };
 
-export { getBook, getBooks, addBook, removeBook, updateBook, replaceBook };
+export {
+	getBook,
+	getBooks,
+	getAllBooks,
+	addBook,
+	removeBook,
+	updateBook,
+	replaceBook,
+};
 
 // addDoc(collectionRef, data) - Writes to a collection
 // setDoc(documentRef, data) - Writes to a document

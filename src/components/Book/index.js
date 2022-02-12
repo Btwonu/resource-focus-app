@@ -13,7 +13,7 @@ const Book = ({
 	const authorList = authors.map((author, i) => <li key={i}>{author}</li>);
 
 	return (
-		<>
+		<li>
 			<h4>
 				<a href={url} target="_blank">
 					{title}
@@ -33,7 +33,7 @@ const Book = ({
 			<p>
 				Completed? : <span>{completed ? 'Yes' : 'No'}</span>
 			</p>
-		</>
+		</li>
 	);
 };
 

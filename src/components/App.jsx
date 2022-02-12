@@ -1,72 +1,26 @@
-import { ITEMS_DATA, BOOKS_DATA, VIDEO_DATA, CHILD_DATA } from '../data-mock';
+// Dependencies
 import React from 'react';
-import Hero from './Hero';
-import Section from './Section';
-import Shell from './Shell';
-import Divider from './Divider';
-import Button from './Button';
-import SubSection from './Sub-section';
-import TaskList from './Task-list';
-import VideoForm from './Video-form/VideoForm';
-import Modal from './Modal';
-import Timer from './Timer';
-import TopicList from './Topic-list';
-import Book from './Book';
-import BookList from './Book-list';
-
-import {
-	getBook,
-	getBooks,
-	addBook,
-	patchBook,
-	removeBook,
-	replaceBook,
-} from '../services/book-service.js';
-
+import { Link, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '../services/seedBooks.js';
 
+// Pages
+import { Dashboard, Empty } from '../pages';
+
+// Components
+import Topic from '../components/Topic';
+
 const App = () => {
-	getBooks();
-	const returnLinkItem = (item, i) => {
-		return (
-			<li key={i}>
-				<a href={item.url}>{item.title}</a>
-			</li>
-		);
-	};
-
-	const itemsArray = ITEMS_DATA.map(returnLinkItem);
-	const booksArray = BOOKS_DATA.map(returnLinkItem);
-	const videoArray = VIDEO_DATA.map(returnLinkItem);
-	const childArray = CHILD_DATA.map(returnLinkItem);
-
 	return (
-		<div className="wrapper">
-			<Shell>
-				<BookList />
-				<TopicList></TopicList>
-				<Hero />
-				<Button />
-				<Divider />
-				<Section title="Readings" items={itemsArray}>
-					<SubSection title="Books" items={booksArray} />
-				</Section>
-
-				<Section title="Videos" items={videoArray}>
-					<Modal>
-						<VideoForm></VideoForm>
-					</Modal>
-				</Section>
-
-				<Section title="Tasks">
-					<TaskList></TaskList>
-				</Section>
-
-				<Section title="Child Pages" items={childArray}></Section>
-
-				<Timer />
-			</Shell>
-		</div>
+		<BrowserRouter>
+			{/* <TopicList /> */}
+			<Routes>
+				<Route path="/" element={<Dashboard />}>
+					<Route path=":topicId" element={<Topic />} />
+					<Route path="*" element={<Empty />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	);
 };
 
