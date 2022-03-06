@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import '../services/seedBooks.js';
 
 // Pages
 import { Dashboard, Empty } from '../pages';

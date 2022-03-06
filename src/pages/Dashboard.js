@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 // Data
 import { TOPICS_DATA } from '../data-mock';
 
-// Services
-import { getTopics } from '../services/topic-service';
-
 const Dashboard = () => {
   const [topics, setTopics] = useState([]);
 

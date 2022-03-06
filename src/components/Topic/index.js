@@ -1,8 +1,8 @@
 import {
-	ITEMS_DATA,
-	BOOKS_DATA,
-	VIDEO_DATA,
-	CHILD_DATA,
+  ITEMS_DATA,
+  BOOKS_DATA,
+  VIDEO_DATA,
+  CHILD_DATA,
 } from '../../data-mock';
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
@@ -22,84 +22,80 @@ import TopicList from '../Topic-list';
 import Book from '../Book';
 import BookList from '../Book-list';
 
-// Services
-import { getTopic } from '../../services/topic-service';
-import { getBook } from '../../services/book-service';
-
 const Topic = ({ title }) => {
-	const { topicId } = useParams();
-	const [bookIds, setBookIds] = useState(null);
-	const [books, setBooks] = useState([]);
+  const { topicId } = useParams();
+  const [bookIds, setBookIds] = useState(null);
+  const [books, setBooks] = useState([]);
 
-	useEffect(() => {
-		getTopic(topicId)
-			.then((docSnapshot) => {
-				if (docSnapshot.exists()) {
-					const docData = docSnapshot.data();
-					console.log('Setting books id...');
-					setBookIds(docData.bookIds);
-				} else {
-					console.log('Does not exist.');
-				}
-			})
-			.catch((err) => console.log('Error:', err));
-	}, [topicId]);
+  useEffect(() => {
+    getTopic(topicId)
+      .then((docSnapshot) => {
+        if (docSnapshot.exists()) {
+          const docData = docSnapshot.data();
+          console.log('Setting books id...');
+          setBookIds(docData.bookIds);
+        } else {
+          console.log('Does not exist.');
+        }
+      })
+      .catch((err) => console.log('Error:', err));
+  }, [topicId]);
 
-	useEffect(() => {
-		const bookPromises = [];
+  useEffect(() => {
+    const bookPromises = [];
 
-		bookIds?.forEach((bookId) => {
-			bookPromises.push(getBook(bookId));
-		});
+    bookIds?.forEach((bookId) => {
+      bookPromises.push(getBook(bookId));
+    });
 
-		const arr = Promise.all(bookPromises)
-			.then((values) =>
-				values.map((docSnapshot) => {
-					if (docSnapshot.exists()) {
-						return {
-							id: docSnapshot.id,
-							...docSnapshot.data(),
-						};
-					} else {
-						console.log('Does not exist.');
-						return null;
-					}
-				})
-			)
-			.catch((err) => console.log('Error:', err));
+    const arr = Promise.all(bookPromises)
+      .then((values) =>
+        values.map((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            return {
+              id: docSnapshot.id,
+              ...docSnapshot.data(),
+            };
+          } else {
+            console.log('Does not exist.');
+            return null;
+          }
+        })
+      )
+      .catch((err) => console.log('Error:', err));
 
-		arr.then((result) => setBooks(result));
-	}, [bookIds]);
+    arr.then((result) => setBooks(result));
+  }, [bookIds]);
 
-	const returnLinkItem = (item, i) => {
-		return (
-			<li key={i}>
-				<a href={item.url}>{item.title}</a>
-			</li>
-		);
-	};
+  const returnLinkItem = (item, i) => {
+    return (
+      <li key={i}>
+        <a href={item.url}>{item.title}</a>
+      </li>
+    );
+  };
 
-	const itemsArray = ITEMS_DATA.map(returnLinkItem);
-	const booksArray = BOOKS_DATA.map(returnLinkItem);
-	const videoArray = VIDEO_DATA.map(returnLinkItem);
-	const childArray = CHILD_DATA.map(returnLinkItem);
+  const itemsArray = ITEMS_DATA.map(returnLinkItem);
+  const booksArray = BOOKS_DATA.map(returnLinkItem);
+  const videoArray = VIDEO_DATA.map(returnLinkItem);
+  const childArray = CHILD_DATA.map(returnLinkItem);
 
-	return (
-		<Shell>
-			<Hero title={title} />
+  return (
+    <Shell>
+      <Hero title={title} />
 
-			{console.log(books)}
+      {console.log(books)}
 
-			{books && books.length ? (
-				<ul>
-					{books.map((bookProps) => (
-						<Book key={bookProps.id} {...bookProps} />
-					))}
-				</ul>
-			) : null}
+      {books && books.length ? (
+        <ul>
+          {books.map((bookProps) => (
+            <Book key={bookProps.id} {...bookProps} />
+          ))}
+        </ul>
+      ) : null}
 
-			<Divider />
-			{/* 
+      <Divider />
+      {/* 
 			<Section title="Readings" items={itemsArray}>
 				<SubSection title="Books" items={booksArray} />
 			</Section>
@@ -114,10 +110,10 @@ const Topic = ({ title }) => {
 				<TaskList></TaskList>
 			</Section> */}
 
-			<Timer />
-			{/* {bookIds} Call firestore */}
-		</Shell>
-	);
+      <Timer />
+      {/* {bookIds} Call firestore */}
+    </Shell>
+  );
 };
 
 export default Topic;
