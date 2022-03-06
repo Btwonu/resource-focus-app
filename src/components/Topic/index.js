@@ -15,7 +15,6 @@ import Divider from '../Divider';
 import Button from '../Button';
 import SubSection from '../Sub-section';
 import TaskList from '../Task-list';
-import VideoForm from '../Video-form/VideoForm';
 import Modal from '../Modal';
 import Timer from '../Timer';
 import TopicList from '../Topic-list';
