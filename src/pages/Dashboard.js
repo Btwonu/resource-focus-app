@@ -9,39 +9,26 @@ import { TOPICS_DATA } from '../data-mock';
 import { getTopics } from '../services/topic-service';
 
 const Dashboard = () => {
-	const [topics, setTopics] = useState([]);
+  const [topics, setTopics] = useState([]);
 
-	useEffect(() => {
-		getTopics()
-			.then((querySnapshot) => {
-				const topicsArr = [];
+  useEffect(() => {
+    setTopics([]);
+  }, []);
 
-				querySnapshot.forEach((doc) => {
-					topicsArr.push({
-						id: doc.id,
-						...doc.data(),
-					});
-				});
+  const topicsList = topics.map((topic) => (
+    <li key={topic.id}>
+      <Link to={topic.id}>{topic.title}</Link>
+    </li>
+  ));
 
-				setTopics(topicsArr);
-			})
-			.catch((err) => console.log('Error:', err));
-	}, []);
+  return (
+    <>
+      <h2>Dashboard</h2>
 
-	const topicsList = topics.map((topic) => (
-		<li key={topic.id}>
-			<Link to={topic.id}>{topic.title}</Link>
-		</li>
-	));
-
-	return (
-		<>
-			<h2>Dashboard</h2>
-
-			<ul>{topicsList}</ul>
-			<Outlet />
-		</>
-	);
+      <ul>{topicsList}</ul>
+      <Outlet />
+    </>
+  );
 };
 
 export default Dashboard;
