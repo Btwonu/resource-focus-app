@@ -10,6 +10,7 @@ import {
   deleteDoc,
   updateDoc,
   query,
+  where,
 } from 'firebase/firestore';
 
 const config = {
@@ -36,4 +37,5 @@ export {
   deleteDoc,
   updateDoc,
   query,
+  where,
 };

@@ -9,6 +9,7 @@ import {
   deleteDoc,
   updateDoc,
   query,
+  where,
 } from '../config/firebase.config';
 
 /**
@@ -80,12 +81,12 @@ const getAll = (col) => {
       const promises = [];
 
       querySnapshot.forEach((doc) => {
-        const bookData = {
+        const docData = {
           ...doc.data(),
           id: doc.id,
         };
 
-        promises.push(bookData);
+        promises.push(docData);
       });
 
       return Promise.all(promises);
@@ -93,4 +94,39 @@ const getAll = (col) => {
     .catch((err) => console.log(err));
 };
 
-export { save, update, destroy, get, getAll };
+// Temporary get many method
+const getMany = (col, docIdsArray) => {
+  // const q = query(
+  //   collection(db, col),
+  //   where(db.FieldPath, 'in', docIdsArray)
+  // );
+
+  // getDocs(q).then((querySnapshot) => {
+  //   console.log(querySnapshot.size);
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(doc);
+  //     console.log(doc.data());
+  //   });
+  // });
+
+  return getDocs(collection(db, col))
+    .then((querySnapshot) => {
+      const promises = [];
+
+      querySnapshot.forEach((doc) => {
+        if (docIdsArray.includes(doc.id)) {
+          const docData = {
+            ...doc.data(),
+            id: doc.id,
+          };
+
+          promises.push(docData);
+        }
+      });
+
+      return Promise.all(promises);
+    })
+    .catch((err) => console.log(err));
+};
+
+export { save, update, destroy, get, getAll, getMany };

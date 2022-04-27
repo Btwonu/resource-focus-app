@@ -5,6 +5,7 @@ import VideoForm from '../components/Video-form';
 import BookForm from '../components/Book-form';
 import ArticleForm from '../components/Article-form';
 import Book from '../components/Book';
+import Topic from '../components/Topic';
 
 // Data
 import { TOPICS_DATA } from '../data-mock';
@@ -17,28 +18,31 @@ const Dashboard = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
+    db.getAll('topics').then((topicArray) => {
+      const topicsList = topicArray.map((topic) => (
+        <Topic key={topic.id} {...topic} />
+      ));
+
+      setTopics(topicsList);
+    });
+
     db.getAll('books')
       .then((bookArray) => {
         const bookList = bookArray.map((book) => (
           <Book key={book.id} {...book} />
         ));
 
+        console.log(bookList);
         setBooks(bookList);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const topicsList = topics.map((topic) => (
-    <li key={topic.id}>
-      <Link to={topic.id}>{topic.title}</Link>
-    </li>
-  ));
-
   return (
     <>
       <h2>Dashboard</h2>
 
-      <ul>{topicsList}</ul>
+      {topics && <ul>{topics}</ul>}
 
       <VideoForm />
 

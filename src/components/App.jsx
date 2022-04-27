@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard, Empty } from '../pages';
 
 // Components
-import Topic from '../components/Topic';
+import TopicDetails from '../components/Topic-details';
 
 // Test
 import '../services/seed';
@@ -18,9 +18,10 @@ const App = () => {
       {/* <TopicList /> */}
       <Routes>
         <Route path="/" element={<Dashboard />}>
-          <Route path=":topicId" element={<Topic />} />
           <Route path="*" element={<Empty />} />
         </Route>
+
+        <Route path="/topics/:topicId" element={<TopicDetails />} exact />
       </Routes>
     </BrowserRouter>
   );
