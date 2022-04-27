@@ -6,16 +6,19 @@ import Book from '../Book';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { get, getAll, getMany } from '../../services/firestore-service';
+import { get, getMany } from '../../services/firestore-service';
 
 const TopicDetails = () => {
   let { topicId } = useParams();
   let [books, setBooks] = useState();
+  let [title, setTitle] = useState('');
 
   useEffect(() => {
     get(`/topics/${topicId}`)
-      .then((res) => {
-        getMany('books', res.bookIds)
+      .then((currentTopic) => {
+        setTitle(currentTopic.title);
+
+        getMany('books', currentTopic.bookIds)
           .then((bookArray) => {
             const bookList = bookArray.map((book) => (
               <Book key={book.id} {...book} />
@@ -30,7 +33,7 @@ const TopicDetails = () => {
 
   return (
     <>
-      <div>{topicId}</div>
+      {title && <h1>{title}</h1>}
 
       {books && <ul>{books}</ul>}
     </>
