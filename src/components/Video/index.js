@@ -4,7 +4,7 @@ import './styles.scss';
 const Video = ({ id, description, tags, title, url, createdAt }) => {
   let embedUrl = url.replace(/watch\?v=/, 'embed/');
 
-  const tagList = tags.map((tag) => <li>{tag}</li>);
+  const tagList = tags.map((tag, i) => <li key={i}>{tag}</li>);
 
   return (
     <>
@@ -15,9 +15,8 @@ const Video = ({ id, description, tags, title, url, createdAt }) => {
         height="315"
         src={embedUrl}
         title="YouTube video player"
-        frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
+        allowFullScreen
       ></iframe>
 
       <p>{description}</p>
