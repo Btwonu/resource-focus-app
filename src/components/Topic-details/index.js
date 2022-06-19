@@ -1,81 +1,121 @@
 import React from 'react';
 import './styles.scss';
 
-import Book from '../Book';
-import Video from '../Video';
-import Article from '../Article';
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Book from '../Book';
+import Video from '../Video';
+import Article from '../Article';
+import VideoForm from '../Video-form';
+import ArticleForm from '../Article-form';
+import BookForm from '../Book-form';
+
 import { get, getMany } from '../../services/firestore-service';
 
+let cache = null;
+
 const TopicDetails = () => {
-  const { topicId } = useParams();
-  const [books, setBooks] = useState();
-  const [videos, setVideos] = useState();
-  const [articles, setArticles] = useState();
-  const [title, setTitle] = useState('');
+	const { topicId } = useParams();
+	const [books, setBooks] = useState();
+	const [videos, setVideos] = useState();
+	const [articles, setArticles] = useState();
+	const [title, setTitle] = useState('');
 
-  useEffect(() => {
-    get(`/topics/${topicId}`)
-      .then((currentTopic) => {
-        setTitle(currentTopic.title);
+	const [bookState, setBookState] = useState(
+		cache !== null ? cache : { bookData: null }
+	);
 
-        // Get books
-        getMany('books', currentTopic.bookIds)
-          .then((bookArray) => {
-            const bookList = bookArray.map((book) => (
-              <Book key={book.id} {...book} />
-            ));
+	console.log({ cache });
+	console.log({ bookState });
 
-            setBooks(bookList);
-          })
-          .catch((err) => console.log(err));
+	useEffect(() => {
+		console.log('hi');
+		console.log(bookState);
 
-        // Get videos
-        getMany('videos', currentTopic.videoIds)
-          .then((videoArray) => {
-            const videoList = videoArray.map((video) => (
-              <Video key={video.id} {...video} />
-            ));
+		if (bookState.bookData === null) {
+			console.log('Loading...');
 
-            setVideos(videoList);
-          })
-          .catch((err) => console.log(err));
+			setTimeout(() => {
+				console.log('Done loading.');
 
-        // Get articles
-        getMany('articles', currentTopic.articleIds)
-          .then((articleArray) => {
-            console.log(articleArray);
-            const articleList = articleArray.map((article) => (
-              <Article key={article.id} {...article} />
-            ));
+				setBookState({ bookData: 'not null' });
+			}, 1000);
+		}
 
-            setArticles(articleList);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-  }, []);
+		return () => {
+			console.log('bye');
+			console.log({ bookState });
+			cache = bookState;
+			console.log({ cache });
+		};
+	}, []);
 
-  return (
-    <>
-      {title && <h1>{title}</h1>}
+	// useEffect(() => {
+	// 	get(`/topics/${topicId}`)
+	// 		.then((currentTopic) => {
+	// 			setTitle(currentTopic.title);
 
-      <h2>Videos</h2>
+	// 			// Get books
+	// 			getMany('books', currentTopic.bookIds)
+	// 				.then((bookArray) => {
+	// 					const bookList = bookArray.map((book) => (
+	// 						<Book key={book.id} {...book} />
+	// 					));
 
-      {videos && <ul>{videos}</ul>}
+	// 					setBooks(bookList);
+	// 				})
+	// 				.catch((err) => console.log(err));
 
-      <h2>Articles</h2>
+	// 			// Get videos
+	// 			getMany('videos', currentTopic.videoIds)
+	// 				.then((videoArray) => {
+	// 					const videoList = videoArray.map((video) => (
+	// 						<Video key={video.id} {...video} />
+	// 					));
 
-      {articles && <ul>{articles}</ul>}
+	// 					setVideos(videoList);
+	// 				})
+	// 				.catch((err) => console.log(err));
 
-      <h2>Books</h2>
+	// 			// Get articles
+	// 			getMany('articles', currentTopic.articleIds)
+	// 				.then((articleArray) => {
+	// 					console.log(articleArray);
+	// 					const articleList = articleArray.map((article) => (
+	// 						<Article key={article.id} {...article} />
+	// 					));
 
-      {books && <ul>{books}</ul>}
-    </>
-  );
+	// 					setArticles(articleList);
+	// 				})
+	// 				.catch((err) => console.log(err));
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// }, []);
+
+	return (
+		<>
+			{title && <h1>{title}</h1>}
+
+			<h2>Videos</h2>
+
+			{videos && <ul>{videos}</ul>}
+
+			<VideoForm />
+
+			<h2>Articles</h2>
+
+			{articles && <ul>{articles}</ul>}
+
+			<ArticleForm />
+
+			<h2>Books</h2>
+
+			{books && <ul>{books}</ul>}
+
+			<BookForm />
+		</>
+	);
 };
 
 export default TopicDetails;

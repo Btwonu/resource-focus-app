@@ -14,51 +14,28 @@ import { TOPICS_DATA } from '../data-mock';
 import * as db from '../services/firestore-service';
 
 const Dashboard = () => {
-  const [topics, setTopics] = useState([]);
-  const [books, setBooks] = useState([]);
+	const [topics, setTopics] = useState([]);
+	const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    db.getAll('topics').then((topicArray) => {
-      const topicsList = topicArray.map((topic) => (
-        <Topic key={topic.id} {...topic} />
-      ));
+	useEffect(() => {
+		db.getAll('topics').then((topicArray) => {
+			const topicsList = topicArray.map((topic) => (
+				<Topic key={topic.id} {...topic} />
+			));
 
-      setTopics(topicsList);
-    });
+			setTopics(topicsList);
+		});
+	}, []);
 
-    db.getAll('books')
-      .then((bookArray) => {
-        const bookList = bookArray.map((book) => (
-          <Book key={book.id} {...book} />
-        ));
+	return (
+		<>
+			<h2>Dashboard</h2>
 
-        console.log(bookList);
-        setBooks(bookList);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+			{topics && <ul>{topics}</ul>}
 
-  return (
-    <>
-      <h2>Dashboard</h2>
-
-      {topics && <ul>{topics}</ul>}
-
-      <VideoForm />
-
-      <hr />
-
-      <BookForm />
-
-      <hr />
-
-      <ArticleForm />
-
-      {books && <ul>{books}</ul>}
-
-      <Outlet />
-    </>
-  );
+			<Outlet />
+		</>
+	);
 };
 
 export default Dashboard;
