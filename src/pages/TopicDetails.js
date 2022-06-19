@@ -72,7 +72,7 @@ const TopicDetails = () => {
 			{videos && <ul>{videos}</ul>}
 
 			<Modal triggerModalText="Add video">
-				<VideoForm />
+				<VideoForm topicId={topicId} />
 			</Modal>
 
 			<h2>Articles</h2>

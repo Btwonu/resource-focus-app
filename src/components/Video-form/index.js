@@ -5,7 +5,7 @@ import FormInput from '../Form-input';
 // Services
 import * as db from '../../services/firestore-service';
 
-const VideoForm = ({ children }) => {
+const VideoForm = ({ children, topicId }) => {
 	const [formState, setFormState] = useState({
 		title: '',
 		description: '',
@@ -37,9 +37,21 @@ const VideoForm = ({ children }) => {
 			createdAt: Date.now(),
 		};
 
+		// console.log({ topicId });
+		// console.log({ data });
+
 		db.save('videos', data)
 			.then((docRef) => {
 				console.log(`Document reference ${docRef} succesfully stored`);
+				db.updateArray(`topics/${topicId}`, 'videoIds', docRef.id)
+					.then((res) => {
+						console.log('Successfully added video to topic');
+						console.log(res);
+					})
+					.catch((err) => {
+						alert('Error while saving video id to topic');
+						console.log(err);
+					});
 			})
 			.catch((err) => console.error(err));
 
@@ -96,13 +108,13 @@ const VideoForm = ({ children }) => {
 							onChange={onChange}
 						/>
 					</div>
-				</form>
 
-				<div className="form__actions">
-					<button className="btn btn--dark" type="submit">
-						Add
-					</button>
-				</div>
+					<div className="form__actions">
+						<button className="btn btn--dark" type="submit">
+							Add
+						</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	);

@@ -11,6 +11,7 @@ import {
   updateDoc,
   query,
   where,
+  arrayUnion,
 } from 'firebase/firestore';
 
 const config = {
@@ -38,4 +39,5 @@ export {
   updateDoc,
   query,
   where,
+  arrayUnion,
 };

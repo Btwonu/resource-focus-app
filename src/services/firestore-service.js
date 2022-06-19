@@ -1,15 +1,16 @@
 import {
-  db,
-  collection,
-  doc,
-  addDoc,
-  setDoc,
-  getDoc,
-  getDocs,
-  deleteDoc,
-  updateDoc,
-  query,
-  where,
+	db,
+	collection,
+	doc,
+	addDoc,
+	setDoc,
+	getDoc,
+	getDocs,
+	deleteDoc,
+	updateDoc,
+	query,
+	where,
+	arrayUnion,
 } from '../config/firebase.config';
 
 /**
@@ -21,9 +22,9 @@ import {
  * @return  {Promise<DocumentReference>} Firestore Document Reference
  */
 const save = (col, data) => {
-  let collectionRef = collection(db, col);
+	let collectionRef = collection(db, col);
 
-  return addDoc(collectionRef, data);
+	return addDoc(collectionRef, data);
 };
 
 /**
@@ -35,9 +36,15 @@ const save = (col, data) => {
  * @return  {Promise<void>}
  */
 const update = (path, data) => {
-  let docReference = doc(db, path);
+	let docReference = doc(db, path);
 
-  return updateDoc(docReference, data);
+	return updateDoc(docReference, data);
+};
+
+const updateArray = (path, array, item) => {
+	let docReference = doc(db, path);
+
+	return updateDoc(docReference, { [array]: arrayUnion(item) });
 };
 
 /**
@@ -48,7 +55,7 @@ const update = (path, data) => {
  * @return  {Promise<void>}
  */
 const destroy = (path) => {
-  return deleteDoc(doc(db, path));
+	return deleteDoc(doc(db, path));
 };
 
 /**
@@ -59,13 +66,15 @@ const destroy = (path) => {
  * @return  {Promise:<Object>} Document snapshot data fields
  */
 const get = (path) => {
-  return getDoc(doc(db, path)).then((docSnapshot) => {
-    if (docSnapshot.exists()) {
-      return docSnapshot.data();
-    } else {
-      throw new Error('Firestore document doesnt exist at the specified path');
-    }
-  });
+	return getDoc(doc(db, path)).then((docSnapshot) => {
+		if (docSnapshot.exists()) {
+			return docSnapshot.data();
+		} else {
+			throw new Error(
+				'Firestore document doesnt exist at the specified path'
+			);
+		}
+	});
 };
 
 /**
@@ -76,57 +85,57 @@ const get = (path) => {
  * @return {Promise<Object[]>} Resolved promise array with queried documents
  */
 const getAll = (col) => {
-  return getDocs(collection(db, col))
-    .then((querySnapshot) => {
-      const promises = [];
+	return getDocs(collection(db, col))
+		.then((querySnapshot) => {
+			const promises = [];
 
-      querySnapshot.forEach((doc) => {
-        const docData = {
-          ...doc.data(),
-          id: doc.id,
-        };
+			querySnapshot.forEach((doc) => {
+				const docData = {
+					...doc.data(),
+					id: doc.id,
+				};
 
-        promises.push(docData);
-      });
+				promises.push(docData);
+			});
 
-      return Promise.all(promises);
-    })
-    .catch((err) => console.log(err));
+			return Promise.all(promises);
+		})
+		.catch((err) => console.log(err));
 };
 
 // Temporary get many method
 const getMany = (col, docIdsArray) => {
-  // const q = query(
-  //   collection(db, col),
-  //   where(db.FieldPath, 'in', docIdsArray)
-  // );
+	// const q = query(
+	//   collection(db, col),
+	//   where(db.FieldPath, 'in', docIdsArray)
+	// );
 
-  // getDocs(q).then((querySnapshot) => {
-  //   console.log(querySnapshot.size);
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(doc);
-  //     console.log(doc.data());
-  //   });
-  // });
+	// getDocs(q).then((querySnapshot) => {
+	//   console.log(querySnapshot.size);
+	//   querySnapshot.forEach((doc) => {
+	//     console.log(doc);
+	//     console.log(doc.data());
+	//   });
+	// });
 
-  return getDocs(collection(db, col))
-    .then((querySnapshot) => {
-      const promises = [];
+	return getDocs(collection(db, col))
+		.then((querySnapshot) => {
+			const promises = [];
 
-      querySnapshot.forEach((doc) => {
-        if (docIdsArray.includes(doc.id)) {
-          const docData = {
-            ...doc.data(),
-            id: doc.id,
-          };
+			querySnapshot.forEach((doc) => {
+				if (docIdsArray.includes(doc.id)) {
+					const docData = {
+						...doc.data(),
+						id: doc.id,
+					};
 
-          promises.push(docData);
-        }
-      });
+					promises.push(docData);
+				}
+			});
 
-      return Promise.all(promises);
-    })
-    .catch((err) => console.log(err));
+			return Promise.all(promises);
+		})
+		.catch((err) => console.log(err));
 };
 
-export { save, update, destroy, get, getAll, getMany };
+export { save, update, updateArray, destroy, get, getAll, getMany };
