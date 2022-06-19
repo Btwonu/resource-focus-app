@@ -5,26 +5,28 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Pages
 import { Dashboard, Empty } from '../pages';
-
-// Components
-import TopicDetails from '../components/Topic-details';
+import TopicDetails from '../pages/TopicDetails';
 
 // Test
 import '../services/seed';
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      {/* <TopicList /> */}
-      <Routes>
-        <Route path="/" element={<Dashboard />}>
-          <Route path="*" element={<Empty />} />
-        </Route>
+	return (
+		<BrowserRouter>
+			{/* <TopicList /> */}
+			<Routes>
+				<Route path="/" element={<Dashboard />}>
+					<Route path="*" element={<Empty />} />
+				</Route>
 
-        <Route path="/topics/:topicId" element={<TopicDetails />} exact />
-      </Routes>
-    </BrowserRouter>
-  );
+				<Route
+					path="/topics/:topicId"
+					element={<TopicDetails />}
+					exact
+				/>
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default App;

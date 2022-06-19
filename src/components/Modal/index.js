@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Shell from '../Shell';
 import './styles.scss';
 
-const Modal = ({ children }) => {
+const Modal = ({ children, triggerModalText }) => {
 	const [visible, setVisible] = useState(false);
 
 	// Modal methods
@@ -17,17 +17,24 @@ const Modal = ({ children }) => {
 	if (visible) {
 		return (
 			<div className="modal visible">
-				<Shell>
-					<h2>Modal</h2>
-
+				<Shell className="modal__shell">
 					<div className="modal__body">{children}</div>
 
-					<button onClick={closeModal}>Close modal</button>
+					<button
+						className="btn btn--dark modal__close"
+						onClick={closeModal}
+					>
+						Close
+					</button>
 				</Shell>
 			</div>
 		);
 	} else {
-		return <button onClick={openModal}>Open Modal</button>;
+		return (
+			<button className="btn btn--dark" onClick={openModal}>
+				{triggerModalText || 'Open Modal'}
+			</button>
+		);
 	}
 };
 

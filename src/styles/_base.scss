@@ -1,0 +1,58 @@
+body {
+	font-family: $ff-sans;
+	color: #313131;
+}
+
+img {
+	max-width: 100%;
+}
+
+a {
+	color: #426a5a;
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.wrapper {
+	height: 100vh;
+}
+
+h1 {
+	font-size: 60px;
+}
+
+h2 {
+	font-size: 22px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+// Button
+.btn {
+	padding: 6px 12px;
+	border: none;
+	appearance: none;
+	background: transparent;
+	transition: all 0.3s ease;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	cursor: pointer;
+	min-width: 100px;
+}
+
+.btn--dark {
+	background-color: $c-dark;
+	color: $c-light;
+	border-color: $c-dark;
+
+	&:hover {
+		background-color: $c-light;
+		color: $c-dark;
+	}
+}
