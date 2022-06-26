@@ -6,6 +6,7 @@ import FormInput from '../Form-input';
 import * as db from '../../services/firestore-service';
 
 const VideoForm = ({ children, topicId }) => {
+	console.log({ topicId });
 	const [formState, setFormState] = useState({
 		title: '',
 		description: '',

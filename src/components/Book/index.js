@@ -2,41 +2,63 @@ import React from 'react';
 import './styles.scss';
 
 const Book = ({
-  id,
-  title,
-  authors,
-  url,
-  currentPage,
-  totalPages,
-  completed,
+	id,
+	title,
+	authors,
+	description,
+	url,
+	currentPage,
+	totalPages,
+	completed,
 }) => {
-  const authorList = authors.map((author, i) => <li key={i}>{author}</li>);
+	const authorList = authors.map((author, i) => <li key={i}>{author}</li>);
+	let pagesMarkup;
 
-  return (
-    <li>
-      <h4>
-        <a href={url} target="_blank">
-          {title}
-        </a>
-      </h4>
+	if (totalPages && currentPage > 0) {
+		pagesMarkup = (
+			<p>
+				<span>{currentPage}</span>/<span>{totalPages}</span>
+			</p>
+		);
+	} else if (totalPages && !currentPage) {
+		pagesMarkup = (
+			<p>
+				<span>{totalPages}</span>
+			</p>
+		);
+	}
 
-      <p>
-        {authorList.length && authorList.length > 1 ? 'Authors:' : 'Author:'}
-      </p>
+	return (
+		<li>
+			<h4>
+				<a href={url} target="_blank">
+					{title}
+				</a>
+			</h4>
 
-      <ul>{authorList}</ul>
+			<p>
+				{authorList.length && authorList.length > 1
+					? 'Authors:'
+					: 'Author:'}
+			</p>
 
-      {currentPage > 0 && totalPages && (
-        <p>
-          <span>{currentPage}</span>/<span>{totalPages}</span>
-        </p>
-      )}
+			<ul>{authorList}</ul>
 
-      <p>
-        Completed? : <span>{completed ? 'Yes' : 'No'}</span>
-      </p>
-    </li>
-  );
+			<p>{description && description}</p>
+
+			{/* {currentPage > 0 && totalPages && (
+				<p>
+					<span>{currentPage}</span>/<span>{totalPages}</span>
+				</p>
+			)} */}
+
+			{pagesMarkup && pagesMarkup}
+
+			<p>
+				Completed? : <span>{completed ? 'Yes' : 'No'}</span>
+			</p>
+		</li>
+	);
 };
 
 export default Book;

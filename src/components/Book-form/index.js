@@ -5,7 +5,7 @@ import FormInput from '../Form-input';
 // Services
 import * as db from '../../services/firestore-service';
 
-const BookForm = () => {
+const BookForm = ({ topicId }) => {
 	const [formState, setFormState] = useState({
 		title: '',
 		description: '',
@@ -18,8 +18,6 @@ const BookForm = () => {
 	// Form methods
 	const onChange = (e) => {
 		const { name, value } = e.target;
-
-		console.log(name, value);
 
 		setFormState({
 			...formState,
@@ -47,6 +45,16 @@ const BookForm = () => {
 		db.save('books', data)
 			.then((docRef) => {
 				console.log(`Book succesfully stored`);
+
+				db.updateArray(`topics/${topicId}`, 'bookIds', docRef.id)
+					.then((res) => {
+						console.log('Successfully added book to topic');
+						console.log(res);
+					})
+					.catch((err) => {
+						alert('Error while saving book id to topic');
+						console.log(err);
+					});
 			})
 			.catch((err) => console.error(err));
 

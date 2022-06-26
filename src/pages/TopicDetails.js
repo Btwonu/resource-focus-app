@@ -26,39 +26,44 @@ const TopicDetails = () => {
 			.then((currentTopic) => {
 				setTitle(currentTopic.title);
 
-				// Get books
-				getMany('books', currentTopic.bookIds)
-					.then((bookArray) => {
-						const bookList = bookArray.map((book) => (
-							<Book key={book.id} {...book} />
-						));
+				if (currentTopic.bookIds) {
+					// Get books
+					getMany('books', currentTopic.bookIds)
+						.then((bookArray) => {
+							const bookList = bookArray.map((book) => (
+								<Book key={book.id} {...book} />
+							));
 
-						setBooks(bookList);
-					})
-					.catch((err) => console.log(err));
+							setBooks(bookList);
+						})
+						.catch((err) => console.log(err));
+				}
 
-				// Get videos
-				getMany('videos', currentTopic.videoIds)
-					.then((videoArray) => {
-						const videoList = videoArray.map((video) => (
-							<Video key={video.id} {...video} />
-						));
+				if (currentTopic.videoIds) {
+					// Get videos
+					getMany('videos', currentTopic.videoIds)
+						.then((videoArray) => {
+							const videoList = videoArray.map((video) => (
+								<Video key={video.id} {...video} />
+							));
 
-						setVideos(videoList);
-					})
-					.catch((err) => console.log(err));
+							setVideos(videoList);
+						})
+						.catch((err) => console.log(err));
+				}
 
-				// Get articles
-				getMany('articles', currentTopic.articleIds)
-					.then((articleArray) => {
-						console.log(articleArray);
-						const articleList = articleArray.map((article) => (
-							<Article key={article.id} {...article} />
-						));
+				if (currentTopic.articleIds) {
+					// Get articles
+					getMany('articles', currentTopic.articleIds)
+						.then((articleArray) => {
+							const articleList = articleArray.map((article) => (
+								<Article key={article.id} {...article} />
+							));
 
-						setArticles(articleList);
-					})
-					.catch((err) => console.log(err));
+							setArticles(articleList);
+						})
+						.catch((err) => console.log(err));
+				}
 			})
 			.catch((err) => console.log(err));
 	}, []);
@@ -80,7 +85,7 @@ const TopicDetails = () => {
 			{articles && <ul>{articles}</ul>}
 
 			<Modal triggerModalText="Add Article">
-				<ArticleForm />
+				<ArticleForm topicId={topicId} />
 			</Modal>
 
 			<h2>Books</h2>
@@ -88,7 +93,7 @@ const TopicDetails = () => {
 			{books && <ul>{books}</ul>}
 
 			<Modal triggerModalText="Add book">
-				<BookForm />
+				<BookForm topicId={topicId} />
 			</Modal>
 		</Shell>
 	);

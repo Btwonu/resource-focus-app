@@ -5,7 +5,8 @@ import FormInput from '../Form-input';
 // Services
 import * as db from '../../services/firestore-service';
 
-const ArticleForm = () => {
+const ArticleForm = ({ topicId }) => {
+	console.log('article-form', { topicId });
 	const [formState, setFormState] = useState({
 		title: '',
 		description: '',
@@ -17,8 +18,6 @@ const ArticleForm = () => {
 	const onChange = (e) => {
 		const { name, value } = e.target;
 
-		console.log(name, value);
-
 		setFormState({
 			...formState,
 			[name]: value,
@@ -26,6 +25,7 @@ const ArticleForm = () => {
 	};
 
 	const onFormSubmit = (e) => {
+		console.log('submit');
 		e.preventDefault();
 
 		console.log('submitting...');
@@ -42,6 +42,16 @@ const ArticleForm = () => {
 		db.save('articles', data)
 			.then((docRef) => {
 				console.log(`Article succesfully stored`);
+
+				db.updateArray(`topics/${topicId}`, 'articleIds', docRef.id)
+					.then((res) => {
+						console.log('Successfully added book to topic');
+						console.log(res);
+					})
+					.catch((err) => {
+						alert('Error while saving book id to topic');
+						console.log(err);
+					});
 			})
 			.catch((err) => console.error(err));
 
@@ -98,13 +108,13 @@ const ArticleForm = () => {
 							onChange={onChange}
 						/>
 					</div>
-				</form>
 
-				<div className="form__actions">
-					<button className="btn btn--dark" type="submit">
-						Add article
-					</button>
-				</div>
+					<div className="form__actions">
+						<button className="btn btn--dark" type="submit">
+							Add article
+						</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	);

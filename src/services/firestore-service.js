@@ -105,18 +105,7 @@ const getAll = (col) => {
 
 // Temporary get many method
 const getMany = (col, docIdsArray) => {
-	// const q = query(
-	//   collection(db, col),
-	//   where(db.FieldPath, 'in', docIdsArray)
-	// );
-
-	// getDocs(q).then((querySnapshot) => {
-	//   console.log(querySnapshot.size);
-	//   querySnapshot.forEach((doc) => {
-	//     console.log(doc);
-	//     console.log(doc.data());
-	//   });
-	// });
+	if (!docIdsArray) return;
 
 	return getDocs(collection(db, col))
 		.then((querySnapshot) => {
